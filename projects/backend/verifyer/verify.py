@@ -1,6 +1,6 @@
 #function: verifies links against zimdars lists
-#params: a set of arrays containingall the info from scraping
-#returns
+#params: a set of arrays containing all the info from scraping
+#return: string unverified or verified
 function verifyLink(url){
     #list of untrustworthy website
     zimdarsList=["100PercentFedUp.com","EnduringVision.com","21stCenturyWire.com","70news.wordpress.com","The Free Thought Project","Abcnews.com.co","Politicalo","ActivistPost.com","Addicting Info",
