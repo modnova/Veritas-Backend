@@ -7,5 +7,5 @@ import verify
 # Create your views here.
 def test(request):
     if request.method == 'POST':
-       output = verify.verifyLink();
+       output = verify.main()
        return HttpResponse(output, content_type="text/plain")
