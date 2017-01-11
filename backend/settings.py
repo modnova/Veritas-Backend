@@ -25,7 +25,7 @@ SECRET_KEY = 'p)qa&jt4u6*4@!l7m3mw!cy6)@=qv0oe6+1!)l5cvnpe!s#tc='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['veritas1.herokuapp.com']
 
 
 # Application definition
