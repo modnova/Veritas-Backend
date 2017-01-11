@@ -32,3 +32,6 @@ def main():
     url="facebook.com"
     print (verifyLink(url))
     print ("Hello")
+
+if name == "__main__":
+    main()
