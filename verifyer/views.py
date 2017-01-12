@@ -6,7 +6,7 @@ from django.http import HttpResponse
 import verify
 # Create your views here.
 def test(request):
-    output = verify.verifyLink()
+    output = verify.verifyLink("Facebook.com")
     if request.method == 'POST':
         return HttpResponse(output, content_type="text/plain")
     else:
