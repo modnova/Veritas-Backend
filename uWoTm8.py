@@ -26,12 +26,8 @@ def verifyLink(url):
 def verifySafety(url):
     #API key
     #9d8274fab4bfed39cac4891b0b0216fc6d3db539
-    #otScores = requests.get(" http://api.mywot.com/0.4/public_link_json2?hosts=example.COM/www.EXAMPLE.NET/&callback=process&key=cccad4de0255e2519748244ddf4769090d229808")
 	#below is for 1 URL
-	wotScoresJSON = requests.get("http://api.mywot.com/0.4/public_link_json2=facebook.com/&callback=process&key=<cccad4de0255e2519748244ddf4769090d229808>")
-    wotScores = json.loads(wotScoresJSON)
-    print()
-
+	wotScoresJSON = requests.get("http://api.mywot.com/0.4/public_link_json2=facebook.com/&callbasck=process&key=<cccad4de0255e2519748244ddf4769090d229808>")
 	#^had ... + url + ...
 	if wotScores.blacklists != null:
 		return "blacklisted for malware, phishing, or spam"
