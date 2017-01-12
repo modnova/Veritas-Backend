@@ -6,8 +6,8 @@ from django.http import HttpResponse
 import verify
 # Create your views here.
 def test(request):
+    output = verify.verifyLink()
     if request.method == 'POST':
-        output = verify.verifyLink()
         return HttpResponse(output, content_type="text/plain")
     else:
        return HttpResponse(output, content_type="text/plain")
