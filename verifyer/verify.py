@@ -31,9 +31,7 @@ def verifySafety(url):
 def main():
     url="facebook.com"
     print (verifyLink(url))
-    print ("Hello")
+    
 
 if __name__ == "__main__":
     main()
-
-    
