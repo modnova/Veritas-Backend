@@ -1,5 +1,6 @@
 #Imported necessary components to make API Calls
 import requests
+import json
 
 #function: verifies links against zimdars lists
 #params: a set of arrays containing all the info from scraping
@@ -24,34 +25,37 @@ def verifyLink(url):
 
 def verifySafety(url):
     #API key
-    #cccad4de0255e2519748244ddf4769090d229808
+    #9d8274fab4bfed39cac4891b0b0216fc6d3db539
     #otScores = requests.get(" http://api.mywot.com/0.4/public_link_json2?hosts=example.COM/www.EXAMPLE.NET/&callback=process&key=cccad4de0255e2519748244ddf4769090d229808")
 	#below is for 1 URL
-	wotScores = requests.get("http://api.mywot.com/0.4/public_link_json2=facebook.com/&callback=process&key=<cccad4de0255e2519748244ddf4769090d229808"
+	wotScoresJSON = requests.get("http://api.mywot.com/0.4/public_link_json2=facebook.com/&callback=process&key=<cccad4de0255e2519748244ddf4769090d229808>")
+    wotScores = json.loads(wotScoresJSON)
+    print()
+
 	#^had ... + url + ...
-	if wotScores.blacklists != null
+	if wotScores.blacklists != null:
 		return "blacklisted for malware, phishing, or spam"
-		
+
 	#200 is success, 500 server error, 403 incorrect parameters/invalid API key, 429, exceeded daily request quota
-	if wotScores.status_code == 500
+	if wotScores.status_code == 500:
 		return "server error"
-	if wotScores.status_code == 403 || 429
+	if wotScores.status_code == 403 or 429:
 		return "error, please try again later"
-	if wotScores.target.0.r >= 80
+	if wotScores.target.0 >= 80:
 		return "excellent"
-	if wotScores.target.0.r >= 60
+	if wotScores.target.0.r >= 60:
 		return "good"
-	if wotScores.target.0.r >= 40
+	if wotScores.target.0.r >= 40:
 		return "caution"
-	if wotScores.target.0.r >= 20
+	if wotScores.target.0.r >= 20:
 		return "warning"
-	if wotScores.target.0.r >= 0
+	if wotScores.target.0.r >= 0:
 		return "stay away"
 	#requests.get should retrieve WoT scores like trustworthiness... compare with WoT scoring table
 	#decide how to incorporate confidence rating
-	
-	
-	
+
+
+
 def main():
 #enter URL below before testing
     url = "facebook.com"
