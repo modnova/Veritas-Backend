@@ -14,7 +14,7 @@ def verifyLink(url):
     #loop through every website on zimdar's list
     for website in zimdarsList:
         #if the url is found in zimdar's list
-        if website.lower().find(url) != -1:
+        if string.lower(website).find(url) != -1:
             return "unverified"
 
 
@@ -29,9 +29,9 @@ def verifySafety(url):
 
 
 def main():
-    url="facebook.com"
+    url="facebook"
     print (verifyLink(url))
-    
+
 
 if __name__ == "__main__":
     main()
