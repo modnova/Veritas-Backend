@@ -1,5 +1,7 @@
 #Imported necessary components to make API Calls
-import requests
+import urllib2
+import json
+api_key='cccad4de0255e2519748244ddf4769090d229808'
 #function: verifies links against zimdars lists
 #params: a set of arrays containing all the info from scraping
 #return: string unverified or verified
@@ -14,23 +16,29 @@ def verifyLink(url):
     #loop through every website on zimdar's list
     for website in zimdarsList:
         #if the url is found in zimdar's list
-        if string.lower(website).find(url) != -1:
+        if website.lower().find(url.lower()) != -1:
             return "unverified"
 
 
     #if the entire list is searched with no matches
     return "verified"
 
+
+
 def verifySafety(url):
-    #API key
-    #cccad4de0255e2519748244ddf4769090d229808
-    wot = requests.get(" http://api.mywot.com/0.4/public_link_json2?hosts=example.COM/www.EXAMPLE.NET/&callback=process&key=cccad4de0255e2519748244ddf4769090d229808")
+    api_url='http://api.mywot.com/0.4/public_link_json2?hosts='
+    api_url=api_url+url+'/&callback=process&key=cccad4de0255e2519748244ddf4769090d229808'
+    json_data = urllib2.urlopen(api_url)
+    #data = json.loads(json_data)
+    print json_data
+
 
 
 
 def main():
-    url="facebook"
-    print (verifyLink(url))
+    url='facebook.com'
+    print (verifySafety(url))
+
 
 
 if __name__ == "__main__":
