@@ -29,7 +29,7 @@ def verifySafety(url):
 
 
 def main():
-    url="facebo
+    url="facebook"
     print (verifyLink(url))
 
 
