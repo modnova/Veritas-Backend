@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.core import serializers
+import json
 import verify
 
 # Create your views here.
@@ -9,5 +9,6 @@ def default(request):
 def test(request):
     url = request.GET.get('url')
     verified_status = verify.verifyLink(url)
-    output = serializers.serialize('json', verified_status)
+    output = {'response': verified_status}
+    output = json.dumps(output)
     return HttpResponse(output, mimetype='application/json')
