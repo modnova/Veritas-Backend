@@ -11,4 +11,4 @@ def test(request):
     verified_status = verify.verifyLink(url)
     output = {'response': verified_status}
     output = json.dumps(output)
-    return HttpResponse(output, mimetype='application/json')
+    return HttpResponse(output, content_type='application/json')
