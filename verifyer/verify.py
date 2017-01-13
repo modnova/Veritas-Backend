@@ -21,7 +21,7 @@ def verifyLink(url):
         # if the url is found in zimdar's list
         if(url == ''):
             return 'Unable to Process'
-        if website.lower().find(url.lower()) != -1:
+        if url.lower().find(website.lower()) != -1:
             return "unverified"
 
     # if the entire list is searched with no matches
