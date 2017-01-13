@@ -8,6 +8,6 @@ def default(request):
 
 def test(request):
     url = request.GET.get('url')
-    output = verify.verifyLink(url)
-    output = serializers.serialize('json', verify.verifyLink(url))
+    verified_status = verify.verifyLink(url)
+    output = serializers.serialize('json', verified_status)
     return HttpResponse(output, mimetype='application/json')
