@@ -30,14 +30,34 @@ def verifyLink(url):
 
 
 def verifySafety(url):
-    #Builds a URL for the Web of Trust API to process
+    # Builds a URL for the Web of Trust API to process
     api_url = 'http://api.mywot.com/0.4/public_link_json2?hosts='
     api_url = api_url + url + \
         '/&key=cccad4de0255e2519748244ddf4769090d229808'
-    #Requests the information from WoT and converts it to a python dictionary
-    json_data = requests.get(api_url).json()
+    # Requests the information from WoT and converts it to a python dictionary
+    wot_response = requests.get(api_url)
+    wot_score = wot_response.json()
+    wot_score = wot_score[url]
 
-    return json_data
+    print wot_score
+    # 200 is success, 500 server error, 403 incorrect parameters/invalid
+    # API key, 429, exceeded daily request quota
+    if wot_response.status_code == 500:
+        return 'server error'
+    if wot_response.status_code == 429:
+        return 'error, please try again later'
+    if wot_score.has_key('blacklists'):
+        return 'blacklisted for malware, phishing, or spam'
+    if wot_score['0'][0] >= 80:
+        return 'excellent'
+    if wot_score['0'][0] >= 60:
+        return 'good'
+    if wot_score['0'][0] >= 40:
+        return 'caution'
+    if wot_score['0'][0] >= 20:
+        return 'warning'
+    if wot_score['0'][0] >= 0:
+        return 'stay away'
 
 
 def main():
