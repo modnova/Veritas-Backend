@@ -19,9 +19,9 @@ from django.contrib import admin
 urlpatterns = [
     #veritas1.herokuapp.com/admin/
     url(r'^admin/', admin.site.urls),
-    #veritas1.herokuapp.com 
-    #To be replaced by index.html
-    url(r'^', include('verifyer.urls')),
+    #veritas1.herokuapp.com/
+    #To be replaced by index.html at a later date
+    url(r'^'),
     #veritas1.herokuapp.com/content/
     url(r'^content/', include('verifyer.urls')),
 ]

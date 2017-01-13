@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     # Example: veritas1.herokuapp.com/content/facebook.com/
-    url(r'^/(?P<url>)/$', views.test, name='verify-url')
+    url(r'^get/$', views.test)
 ]
