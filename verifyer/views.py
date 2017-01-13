@@ -6,6 +6,9 @@ from django.core import serializers
 import verify
 
 # Create your views here.
+def default(request):
+    return HttpResponse('Hello World!')
+
 def test(request):
     url = request.GET.get('url')
     output = verify.verifyLink(url)
