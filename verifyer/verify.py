@@ -19,7 +19,7 @@ def verifyLink(url):
     # loop through every website on zimdar's list
     for website in zimdarsList:
         # if the url is found in zimdar's list
-        if(url == ''):
+        if(url == '' or url == None):
             return 'Unable to Process'
         if url.lower().find(website.lower()) != -1:
             return "unverified"
@@ -63,7 +63,7 @@ def verifySafety(url):
 
 
 def main():
-    url = ''
+    url = 'AmericanNews.com'
     print verifyLink(url)
 
 
