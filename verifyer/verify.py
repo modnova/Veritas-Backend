@@ -26,9 +26,8 @@ def verifyLink(url):
             response['status'] = "unverified"
 
     # if the entire list is searched with no matches
-    if response['status'] != 'unverified' or response['status'] != 'Unable to Process':
+    if not response['status'] == 'unverified' and not response['status'] == 'Unable to Process':
         response['status'] = "verified"
-
 
 """Uses the WoT API to verify links."""
 
