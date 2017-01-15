@@ -40,6 +40,7 @@ def verifySafety(url):
     wot_response = requests.get(api_url)
     wot_score = wot_response.json()
     wot_score = wot_score[u'' + url]
+    print type(wot_score)
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
@@ -63,7 +64,7 @@ def verifySafety(url):
 
 def main(url):
     verifyLink(url)
-    if response['status'] == 'verified':
+    if response['status'] == 'verified' or url != '':
         verifySafety(url)
 
     return response
@@ -73,4 +74,4 @@ def debug():
     verifySafety('tested.com');
 
 if __name__ == "__main__":
-    main()
+    debug()
