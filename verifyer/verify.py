@@ -8,6 +8,7 @@ api_key = 'cccad4de0255e2519748244ddf4769090d229808'
 # return: a dictionary of values
 response = {'status': '', 'wotinfo': ''}
 
+
 def verifyLink(url):
     # list of untrustworthy website
     zimdarsList = ["100PercentFedUp.com", "EnduringVision.com", "21stCenturyWire.com", "70news.wordpress.com", "The Free Thought Project", "Abcnews.com.co", "Politicalo", "ActivistPost.com", "Addicting Info",
@@ -40,7 +41,6 @@ def verifySafety(url):
     wot_response = requests.get(api_url)
     wot_score = wot_response.json()
     wot_score = wot_score[u'' + url]
-    print type(wot_score)
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
@@ -64,14 +64,15 @@ def verifySafety(url):
 
 def main(url):
     verifyLink(url)
-    if response['status'] == 'verified' or url != '':
+    if response['status'] == 'verified' and url != '' and url != None:
         verifySafety(url)
 
     return response
 
-def debug():
-    #Enter function to debug
-    verifySafety('tested.com');
+
+def debug(url):
+    # Enter function to debug
+    print 'Hello'
 
 if __name__ == "__main__":
-    debug()
+    main()
