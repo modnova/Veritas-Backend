@@ -87,8 +87,7 @@ def verifySafety(url):
 def main(url):
     response['status'] = verifyLink(url)
     if response['status'] == 'verified' and url != '' and url != None:
-        print 'Test'
-        #response['status'] = verifySafety(url)
+        response['status'] = verifySafety(url)
 
     return response
 
@@ -97,6 +96,4 @@ def debug(url):
     # Enter function to debug
     print 'Hello!'
 
-if __name__ == "__main__":
-    main("latimes.com")
-    print response
+#if __name__ == "__main__":
