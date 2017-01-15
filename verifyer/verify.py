@@ -40,11 +40,15 @@ def verifySafety(url):
     # Requests the information from WoT and converts it to a python dictionary
     wot_response = requests.get(api_url)
     wot_score = wot_response.json()
-    wot_score = wot_score[u'' + url]
+    # Check to see if WoT has shortened the URL to the base.
+    if wot_score.has_key(u'' + url):
+        wot_score = wot_score[u'' + url]
+    else:
+        wot_score = wot_score.keys()[3]
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
-    if wot_score.has_key(u'0'):
+    if type(wot_score) == 'Dict' and wot_score.has_key(u'0'):
         if wot_response.status_code == 500:
             response['status'] = 'server error'
         elif wot_response.status_code == 429:
@@ -65,6 +69,7 @@ def verifySafety(url):
     else:
         response['wotinfo'] = 'caution: unknown website'
 
+
 def main(url):
     verifyLink(url)
     if response['status'] == 'verified' and url != '' and url != None:
@@ -75,7 +80,7 @@ def main(url):
 
 def debug(url):
     # Enter function to debug
-    print 'Hello'
+    print 'Hello!'
 
 if __name__ == "__main__":
     main()
