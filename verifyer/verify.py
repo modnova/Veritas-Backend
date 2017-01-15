@@ -46,16 +46,19 @@ def verifySafety(url):
         wot_score = wot_score[u'' + url]
     #Find the shortened URL
     else:
+        #The list of keys in the wot_score dictionary
         wot_keys = wot_score.keys()
         for key in wot_keys:
             if url.lower().find(key):
-                wot_score = wot_score.keys().index(key)
+                #The key at the index of the shortened url
+                shortened_url = wot_keys[wot_keys.index(key)]
+                wot_score = wot_score[u'' + shortened_url]
                 break
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
     #Checks to see if   wot_score is a dictionary and if it has a score
-    if isinstance(wot_score, dict) or wot_score.has_key(u'0'):
+    if isinstance(wot_score, dict) and wot_score.has_key(u'0'):
         if wot_response.status_code == 500:
             response['status'] = 'server error'
         elif wot_response.status_code == 429:
@@ -89,4 +92,6 @@ def debug(url):
     # Enter function to debug
     print 'Hello!'
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
+    main("breitbart.com")
+    print response
