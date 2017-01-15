@@ -5,8 +5,8 @@ import requests
 api_key = 'cccad4de0255e2519748244ddf4769090d229808'
 # function: verifies links against zimdars lists
 # params: a set of arrays containing all the info from scraping
-# return: string unverified or verified
-
+# return: a dictionary of values
+response = {'status': '', 'wotinfo': ''}
 
 def verifyLink(url):
     # list of untrustworthy website
@@ -20,12 +20,12 @@ def verifyLink(url):
     for website in zimdarsList:
         # if the url is found in zimdar's list
         if(url == '' or url == None):
-            return 'Unable to Process'
+            response['status'] = 'Unable to Process'
         if url.lower().find(website.lower()) != -1:
-            return "unverified"
+            response['status'] = "unverified"
 
     # if the entire list is searched with no matches
-    return "verified"
+    response['status'] = "verified"
 
 
 """Uses the WoT API to verify links."""
@@ -41,30 +41,32 @@ def verifySafety(url):
     wot_score = wot_response.json()
     wot_score = wot_score[url]
 
-    print wot_score
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
     if wot_response.status_code == 500:
-        return 'server error'
-    if wot_response.status_code == 429:
-        return 'error, please try again later'
-    if wot_score.has_key('blacklists'):
-        return 'blacklisted for malware, phishing, or spam'
-    if wot_score['0'][0] >= 80:
-        return 'excellent'
-    if wot_score['0'][0] >= 60:
-        return 'good'
-    if wot_score['0'][0] >= 40:
-        return 'caution'
-    if wot_score['0'][0] >= 20:
-        return 'warning'
-    if wot_score['0'][0] >= 0:
-        return 'stay away'
+        response['status'] = 'server error'
+    elif wot_response.status_code == 429:
+        response['status'] = 'error, please try again later'
+    elif wot_score.has_key('blacklists'):
+        response['status'] = 'unverified'
+        response['wotinfo'] = 'blacklisted for malware, phishing, or spam'
+    elif wot_score['0'][0] >= 80:
+        response['wotinfo'] = 'excellent'
+    elif wot_score['0'][0] >= 60:
+        response['wotinfo'] = 'good'
+    elif wot_score['0'][0] > 50:
+        response['wotinfo'] = 'caution'
+    elif wot_score['0'][0] >= 0:
+        response['status'] = 'unverified'
+        response['wotinfo'] = 'stay away'
 
 
-def main():
-    url = 'AmericanNews.com'
-    print verifyLink(url)
+def main(url):
+    verifyLink(url)
+    if response['status'] == 'verified':
+        verifySafety(url)
+
+    return response
 
 
 if __name__ == "__main__":
