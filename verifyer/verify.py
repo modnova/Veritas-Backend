@@ -26,7 +26,7 @@ def verifyLink(url):
             response['status'] = "unverified"
 
     # if the entire list is searched with no matches
-    if(response['status'] == ''):
+    if(response['status'] == 'unverified' or response['status'] == 'Unable to Process'):
         response['status'] = "verified"
 
 
@@ -90,5 +90,4 @@ def debug(url):
     print 'Hello!'
 
 if __name__ == "__main__":
-    verifyLink('breitbart.com')
-    print(response)
+    main()
