@@ -47,7 +47,7 @@ def verifySafety(url):
         wot_keys = wot_score.keys()
         for key in wot_keys:
             if url.lower().find(key):
-                wot_score = wot_score.keys()[key]
+                wot_score = wot_score.keys().index(key)
                 break
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
