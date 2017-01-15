@@ -82,6 +82,7 @@ def verifySafety(url):
 def main(url):
     verifyLink(url)
     if response['status'] == 'verified' and url != '' and url != None:
+        print 'Test'
         #verifySafety(url)
 
     return response
