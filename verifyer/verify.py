@@ -55,7 +55,7 @@ def verifySafety(url):
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
     #Checks to see if   wot_score is a dictionary and if it has a score
-    if type(wot_score) == 'Dict' and wot_score.has_key(u'0'):
+    if isinstance(wot_score, dict) or wot_score.has_key(u'0'):
         if wot_response.status_code == 500:
             response['status'] = 'server error'
         elif wot_response.status_code == 429:
@@ -89,5 +89,4 @@ def debug(url):
     # Enter function to debug
     print 'Hello!'
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
