@@ -39,7 +39,7 @@ def verifySafety(url):
     # Requests the information from WoT and converts it to a python dictionary
     wot_response = requests.get(api_url)
     wot_score = wot_response.json()
-    wot_score = wot_score['url']
+    wot_score = wot_score[u'' + url]
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
@@ -50,13 +50,13 @@ def verifySafety(url):
     elif wot_score.has_key('blacklists'):
         response['status'] = 'unverified'
         response['wotinfo'] = 'blacklisted for malware, phishing, or spam'
-    elif wot_score['0'][0] >= 80:
+    elif wot_score[u'0'][0] >= 80:
         response['wotinfo'] = 'excellent'
-    elif wot_score['0'][0] >= 60:
+    elif wot_score[u'0'][0] >= 60:
         response['wotinfo'] = 'good'
-    elif wot_score['0'][0] > 50:
+    elif wot_score[u'0'][0] > 50:
         response['wotinfo'] = 'caution'
-    elif wot_score['0'][0] >= 0:
+    elif wot_score[u'0'][0] >= 0:
         response['status'] = 'unverified'
         response['wotinfo'] = 'stay away'
 
@@ -68,6 +68,9 @@ def main(url):
 
     return response
 
+def debug():
+    #Enter function to debug
+    verifySafety('tested.com');
 
 if __name__ == "__main__":
     main()
