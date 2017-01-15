@@ -39,7 +39,7 @@ def verifySafety(url):
     # Requests the information from WoT and converts it to a python dictionary
     wot_response = requests.get(api_url)
     wot_score = wot_response.json()
-    wot_score = wot_score[url]
+    wot_score = wot_score['url']
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
