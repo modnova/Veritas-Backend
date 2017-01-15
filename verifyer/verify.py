@@ -20,7 +20,7 @@ def verifyLink(url):
     # loop through every website on zimdar's list
     for website in zimdarsList:
         # if the url is found in zimdar's list
-        if url == '' or url == None or type(url) == 'NoneType':
+        if url == '' or url == None:
             response['status'] = 'Unable to Process'
         elif url.lower().find(website.lower()) != -1:
             response['status'] = "unverified"
@@ -82,7 +82,7 @@ def verifySafety(url):
 def main(url):
     verifyLink(url)
     if response['status'] == 'verified' and url != '' and url != None:
-        verifySafety(url)
+        #verifySafety(url)
 
     return response
 
@@ -91,4 +91,6 @@ def debug(url):
     # Enter function to debug
     print 'Hello!'
 
-#if __name__ == "__main__":
+if __name__ == "__main__":
+    main("https%3A%2F%2Fwww.ucdavis.edu%2Fnews%2Fmessage-interim-chancellor-ralph-j-hexter-event-cancellation")
+    print response
