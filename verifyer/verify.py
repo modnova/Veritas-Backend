@@ -21,13 +21,12 @@ def verifyLink(url):
     for website in zimdarsList:
         # if the url is found in zimdar's list
         if url == '' or url == None:
-            response['status'] = 'Unable to Process'
+            return 'Unable to Process'
         elif url.lower().find(website.lower()) != -1:
-            response['status'] = "unverified"
+            return "unverified"
 
     # if the entire list is searched with no matches
-    if not response['status'] == 'unverified' and not response['status'] == 'Unable to Process':
-        response['status'] = "verified"
+    return "verified"
 
 """Uses the WoT API to verify links."""
 
@@ -59,31 +58,37 @@ def verifySafety(url):
     #Checks to see if   wot_score is a dictionary and if it has a score
     if isinstance(wot_score, dict) and wot_score.has_key(u'0'):
         if wot_response.status_code == 500:
-            response['status'] = 'server error'
+            response['wotinfo'] = 'server error'
+            return response['status']
         elif wot_response.status_code == 429:
-            response['status'] = 'error, please try again later'
+            response['wotinfo'] = 'error, please try again later'
+            return response['status']
         elif wot_score.has_key('blacklists'):
-            response['status'] = 'unverified'
             response['wotinfo'] = 'blacklisted for malware, phishing, or spam'
+            return 'unverified'
         elif wot_score[u'0'][0] >= 80:
             response['wotinfo'] = 'excellent'
+            return 'verified'
         elif wot_score[u'0'][0] >= 60:
             response['wotinfo'] = 'good'
+            return 'verified'
         elif wot_score[u'0'][0] > 50:
             response['wotinfo'] = 'caution'
+            return 'verified'
         elif wot_score[u'0'][0] >= 0:
-            response['status'] = 'unverified'
             response['wotinfo'] = 'stay away'
+            return 'unverified'
     #If website has never been reviewed by WoT, then display this
     else:
         response['wotinfo'] = 'caution: unknown website'
+        return response['status']
 
 
 def main(url):
-    verifyLink(url)
+    response['status'] = verifyLink(url)
     if response['status'] == 'verified' and url != '' and url != None:
         print 'Test'
-        #verifySafety(url)
+        #response['status'] = verifySafety(url)
 
     return response
 
@@ -93,5 +98,5 @@ def debug(url):
     print 'Hello!'
 
 if __name__ == "__main__":
-    main("https%3A%2F%2Fwww.ucdavis.edu%2Fnews%2Fmessage-interim-chancellor-ralph-j-hexter-event-cancellation")
+    main("latimes.com")
     print response
