@@ -26,7 +26,8 @@ def verifyLink(url):
             response['status'] = "unverified"
 
     # if the entire list is searched with no matches
-    response['status'] = "verified"
+    if(response['status'] == ''):
+        response['status'] = "verified"
 
 
 """Uses the WoT API to verify links."""
@@ -43,6 +44,7 @@ def verifySafety(url):
     # Check to see if WoT has shortened the URL to the base.
     if wot_score.has_key(u'' + url):
         wot_score = wot_score[u'' + url]
+    #Find the shortened URL
     else:
         wot_keys = wot_score.keys()
         for key in wot_keys:
@@ -52,6 +54,7 @@ def verifySafety(url):
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
+    #Checks to see if   wot_score is a dictionary and if it has a score
     if type(wot_score) == 'Dict' and wot_score.has_key(u'0'):
         if wot_response.status_code == 500:
             response['status'] = 'server error'
@@ -69,7 +72,7 @@ def verifySafety(url):
         elif wot_score[u'0'][0] >= 0:
             response['status'] = 'unverified'
             response['wotinfo'] = 'stay away'
-
+    #If website has never been reviewed by WoT, then display this
     else:
         response['wotinfo'] = 'caution: unknown website'
 
@@ -87,4 +90,5 @@ def debug(url):
     print 'Hello!'
 
 if __name__ == "__main__":
-    main()
+    verifyLink('breitbart.com')
+    print(response)
