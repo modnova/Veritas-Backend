@@ -41,26 +41,30 @@ def verifySafety(url):
     wot_response = requests.get(api_url)
     wot_score = wot_response.json()
     wot_score = wot_score[u'' + url]
+    print wot_score
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
-    if wot_response.status_code == 500:
-        response['status'] = 'server error'
-    elif wot_response.status_code == 429:
-        response['status'] = 'error, please try again later'
-    elif wot_score.has_key('blacklists'):
-        response['status'] = 'unverified'
-        response['wotinfo'] = 'blacklisted for malware, phishing, or spam'
-    elif wot_score[u'0'][0] >= 80:
-        response['wotinfo'] = 'excellent'
-    elif wot_score[u'0'][0] >= 60:
-        response['wotinfo'] = 'good'
-    elif wot_score[u'0'][0] > 50:
-        response['wotinfo'] = 'caution'
-    elif wot_score[u'0'][0] >= 0:
-        response['status'] = 'unverified'
-        response['wotinfo'] = 'stay away'
+    if wot_score.has_key(u'0'):
+        if wot_response.status_code == 500:
+            response['status'] = 'server error'
+        elif wot_response.status_code == 429:
+            response['status'] = 'error, please try again later'
+        elif wot_score.has_key('blacklists'):
+            response['status'] = 'unverified'
+            response['wotinfo'] = 'blacklisted for malware, phishing, or spam'
+        elif wot_score[u'0'][0] >= 80:
+            response['wotinfo'] = 'excellent'
+        elif wot_score[u'0'][0] >= 60:
+            response['wotinfo'] = 'good'
+        elif wot_score[u'0'][0] > 50:
+            response['wotinfo'] = 'caution'
+        elif wot_score[u'0'][0] >= 0:
+            response['status'] = 'unverified'
+            response['wotinfo'] = 'stay away'
 
+    else:
+        response['wotinfo'] = 'caution: unknown website'
 
 def main(url):
     verifyLink(url)
