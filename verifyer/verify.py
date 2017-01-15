@@ -20,14 +20,17 @@ def verifyLink(url):
     # loop through every website on zimdar's list
     for website in zimdarsList:
         # if the url is found in zimdar's list
-        if(url == '' or url == None or type(url) == 'NoneType'):
+        if url == '' or url == None or type(url) == 'NoneType':
             response['status'] = 'Unable to Process'
-        if url.lower().find(website.lower()) != -1:
+            return
+        elif url.lower().find(website.lower()) != -1:
             response['status'] = "unverified"
+            return
 
     # if the entire list is searched with no matches
-    if(response['status'] == 'unverified' or response['status'] == 'Unable to Process'):
+    if response['status'] == 'unverified':
         response['status'] = "verified"
+        return
 
 
 """Uses the WoT API to verify links."""
@@ -72,9 +75,11 @@ def verifySafety(url):
         elif wot_score[u'0'][0] >= 0:
             response['status'] = 'unverified'
             response['wotinfo'] = 'stay away'
+        return
     #If website has never been reviewed by WoT, then display this
     else:
         response['wotinfo'] = 'caution: unknown website'
+        return
 
 
 def main(url):
@@ -90,4 +95,4 @@ def debug(url):
     print 'Hello!'
 
 if __name__ == "__main__":
-    main()
+    main('tested.com')
