@@ -44,7 +44,11 @@ def verifySafety(url):
     if wot_score.has_key(u'' + url):
         wot_score = wot_score[u'' + url]
     else:
-        wot_score = wot_score.keys()[3]
+        wot_keys = wot_score.keys()
+        for key in wot_keys:
+            if url.lower().find(key):
+                wot_score = wot_score.keys()[key]
+                break
 
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
