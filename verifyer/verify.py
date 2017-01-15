@@ -26,7 +26,7 @@ def verifyLink(url):
             response['status'] = "unverified"
 
     # if the entire list is searched with no matches
-    if response['status'] != 'unverified':
+    if response['status'] != 'unverified' or response['status'] != 'Unable to Process':
         response['status'] = "verified"
 
 
