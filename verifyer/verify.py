@@ -20,7 +20,7 @@ def verifyLink(url):
     # loop through every website on zimdar's list
     for website in zimdarsList:
         # if the url is found in zimdar's list
-        if(url == '' or url == None):
+        if(url == '' or url == None or type(url) == 'NoneType'):
             response['status'] = 'Unable to Process'
         if url.lower().find(website.lower()) != -1:
             response['status'] = "unverified"
