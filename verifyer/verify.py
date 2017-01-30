@@ -40,7 +40,7 @@ def verifySafety(url):
     wot_response = requests.get(api_url)
     wot_score = wot_response.json()
     # Check to see if WoT has shortened the URL to the base.
-    if wot_score.has_key(u'' + url):
+    if (u'' + url) in wot_score:
         wot_score = wot_score[u'' + url]
     #Find the shortened URL
     else:
@@ -56,14 +56,14 @@ def verifySafety(url):
     # 200 is success, 500 server error, 403 incorrect parameters/invalid
     # API key, 429, exceeded daily request quota
     #Checks to see if   wot_score is a dictionary and if it has a score
-    if isinstance(wot_score, dict) and wot_score.has_key(u'0'):
+    if isinstance(wot_score, dict) and (u'0') in wot_score:
         if wot_response.status_code == 500:
             response['wotinfo'] = 'server error'
             return response['status']
         elif wot_response.status_code == 429:
             response['wotinfo'] = 'error, please try again later'
             return response['status']
-        elif wot_score.has_key('blacklists'):
+        elif ('blacklists') in wot_score:
             response['wotinfo'] = 'blacklisted for malware, phishing, or spam'
             return 'unverified'
         elif wot_score[u'0'][0] >= 80:
@@ -94,6 +94,11 @@ def main(url):
 
 def debug(url):
     # Enter function to debug
-    print 'Hello!'
+    print('Hello!')
+    print(verifyLink(url))
+    print(verifySafety(url))
 
-#if __name__ == "__main__":
+
+
+if __name__ == "__main__":
+    debug('facebook.com')
